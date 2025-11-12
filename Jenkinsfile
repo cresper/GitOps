@@ -1,5 +1,9 @@
 pipeline {
-  agent any
+  agent {
+    kubernetes {
+      inheritFrom 'default'
+    }
+  }
   stages {
     stage('git pull') {
       steps {
