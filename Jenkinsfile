@@ -11,7 +11,10 @@ pipeline {
       steps {
         withCredentials([file(credentialsId: 'kubeconfig', variable: 'KUBECONFIG_FILE')]){
         //  kubernetesDeploy(kubeconfigId: 'kubeconfig',configs: '*.yaml')
-          kubernetesDeploy(kubeconfig: readFile(KUBECONFIG_FILE), configs: '*.yaml')
+        //  kubernetesDeploy(kubeconfig: readFile(KUBECONFIG_FILE), configs: '*.yaml')
+        sh """
+          kubectl --kubeconfig=$KUBECONFIG_FILE apply -f *.yaml
+        """
         }
       }
     }
