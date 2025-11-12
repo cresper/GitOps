@@ -9,9 +9,11 @@ pipeline {
     }
     stage('k8s deploy'){
       steps {
-        kubernetesDeploy(kubeconfigId: 'kubeconfig',
-                         configs: '*.yaml')
+        withCredential([file(credentialsId: 'kubeconfig', variable: 'KUBECONFIG_FILE')]){
+        //  kubernetesDeploy(kubeconfigId: 'kubeconfig',configs: '*.yaml')
+        kubernetesDeploy(kubeconfig: readFile(KUBECONFIG_FILE), configs: '*.yaml')
+        }
       }
-    }    
+    }
   }
 }
