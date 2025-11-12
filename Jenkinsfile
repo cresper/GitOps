@@ -11,8 +11,7 @@ pipeline {
       steps {
         sh '''
           kubectl get nodes -o wide
-        '''
-        }
+        '''        
       }
     }
   }
