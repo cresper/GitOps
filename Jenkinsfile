@@ -14,9 +14,12 @@ pipeline {
     stage('k8s deploy'){
       steps {
         sh '''
-          kubectl get nodes -o wide
-        '''        
+          withCredentials([file(credentialsId: 'kubeconfig-file', variable: 'KUBECONFIG_FILE')]){            
+            kubectl --kubeconfig=$KUBECONFIG_FILE apply -f *.yaml
+          }
+        '''
+        }
       }
-    }
+    }    
   }
-}
+}	
